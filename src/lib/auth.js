@@ -9,7 +9,7 @@ import { authConfig } from "./auth.config";
 const login = async (credentials) => {
   try {
     connectToDb();
-    const user = await User.findOne({ username: credentials.username });
+    const user = await User.findOne({ email: credentials.email });
     console.log(user)
     if (!user) throw new Error("Wrong credentials!");
 
@@ -37,7 +37,7 @@ export const {
   providers: [
     GitHub({
       clientId: process.env.GITHUB_CLIENT_ID,
-clientSecret: process.env.GITHUB_CLIENT_SECRET,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
     }),
     CredentialsProvider({
       async authorize(credentials) {

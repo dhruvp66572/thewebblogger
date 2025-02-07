@@ -8,16 +8,16 @@ export const authConfig = {
       async jwt({ token, user }) {
         if (user) {          
           console.log("In Auth.config User ",user);
-          console.log("In Auth.config token",token);
           token.id = user.id;
           token.isAdmin = user.isAdmin;
         }
+        console.log("In Auth.config token",token);
         return token;
       },
       async session({ session, token }) {
         if (token) {
-          session.user.id = token.id;
-          session.user.isAdmin = token.isAdmin;
+          session.user.id = token.id;          
+          session.user.isAdmin = token.isAdmin;                  
         }
         console.log("In Auth.config Session",session);
         return session;

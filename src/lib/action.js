@@ -12,7 +12,7 @@ export const addPost = async (prevState, formData) => {
   // const desc = formData.get("desc");
   // const slug = formData.get("slug");
 
-  const { title, desc, slug, userId } = Object.fromEntries(formData);
+  const { title, desc, slug, userId, img } = Object.fromEntries(formData);
 
   try {
     connectToDb();
@@ -21,10 +21,11 @@ export const addPost = async (prevState, formData) => {
       desc,
       slug,
       userId,
+      img
     });
 
     await newPost.save();
-    console.log("saved to db");
+    console.log("Post saved to db");
     revalidatePath("/blog");
     revalidatePath("/admin");
   } catch (err) {
@@ -107,7 +108,7 @@ export const register = async (previousState, formData) => {
   try {
     connectToDb();
 
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ email });
 
     if (user) {
       return { error: "Username already exists" };
@@ -134,10 +135,10 @@ export const register = async (previousState, formData) => {
 };
 
 export const login = async (prevState, formData) => {
-  const { username, password } = Object.fromEntries(formData);
+  const { email, password } = Object.fromEntries(formData);
 
   try {
-    await signIn("credentials", { username, password });
+    await signIn("credentials", { email, password });
   } catch (err) {
     console.log(err);
 
