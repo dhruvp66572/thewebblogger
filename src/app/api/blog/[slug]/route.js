@@ -12,7 +12,8 @@ export const GET = async (request, { params }) => {
     return NextResponse.json(post);
   } catch (err) {
     console.log(err);
-    throw new Error("Failed to fetch post!");
+    // throw new Error("Failed to fetch post!");
+    return NextResponse.error("Failed to fetch post!");
   }
 };
 
@@ -26,6 +27,6 @@ export const DELETE = async (request, { params }) => {
     return NextResponse.json("Post deleted");
   } catch (err) {
     console.log(err);
-    throw new Error("Failed to delete post!");
+    return NextResponse.error("Failed to delete post!");
   }
 };

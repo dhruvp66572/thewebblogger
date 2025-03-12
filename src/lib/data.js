@@ -22,7 +22,8 @@ export const getPosts = async () => {
     return posts;
   } catch (err) {
     console.log(err);
-    throw new Error("Failed to fetch posts!");
+    // throw new Error("Failed to fetch posts!");
+    return null;
   }
 };
 

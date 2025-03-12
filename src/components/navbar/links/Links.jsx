@@ -8,24 +8,17 @@ import { handleLogout } from "@/lib/action";
 
 const links = [
   {
-    title: "Homepage",
-    path: "/",
+    title: "Profile",
+    path: "/profile",
   },
   {
-    title: "About",
-    path: "/about",
-  },
-  {
-    title: "Contact",
-    path: "/contact",
-  },
-  {
-    title: "Blog",
-    path: "/blog",
-  },
+    title: "Help",
+    path: "/help",
+  }
 ];
-const Links = ({session}) => {
+const Links = ({ session }) => {
   const [open, setOpen] = useState(false);
+  const [openProfile, setOpenprofile] = useState(false);
   // Temporary values
   // const session = true;
   // const isAdmin = true;
@@ -33,19 +26,39 @@ const Links = ({session}) => {
   return (
     <div className={styles.container}>
       <div className={styles.links}>
-        {links.map((link) => (
+        {/* {links.map((link) => (
           <NavLink key={link.title} item={link} />
-        ))}
+        ))} */}
         {session?.user ? (
           <>
-            {session.user?.isAdmin && <NavLink item={{ title: "Admin", path: "/admin" }} />}
-            <form action={handleLogout}>
-              <button className={styles.logout}>Logout</button>
-            </form>
+              <Image
+          src={"/noAvatar.png"}
+          alt=""
+          width={50}
+          height={50}
+          className={styles.avatar}
+        onClick={() => setOpenprofile((prev) => !prev)}
+        />
+        {/* create menu when click to image in the menu view profile, loguot, help etc */}
+        {openProfile && ( 
+          <div className={styles.profile}>
+             {session.user?.isAdmin && (
+              <NavLink item={{ title: "Admin", path: "/admin" }} />
+            )}
+            {links.map((link) => (
+              <NavLink key={link.title} item={link} />
+            ))}
+            <button className={styles.logout} onClick={handleLogout}>
+              Logout
+            </button>
+          </div>
+        )}
           </>
         ) : (
           <NavLink item={{ title: "Login", path: "/login" }} />
         )}
+
+     
       </div>
       <Image
         src="/menu.png"

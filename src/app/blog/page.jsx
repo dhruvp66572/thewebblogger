@@ -1,7 +1,6 @@
 
 import PostCard from "@/components/postCard/Postcard";
 import styles from "./blog.module.css";
-// import aboutimage from "../../../public/about.png";
 import { getPosts } from "@/lib/data";
 
 // FETCH DATA WITH AN API

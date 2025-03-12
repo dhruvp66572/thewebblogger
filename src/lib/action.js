@@ -138,7 +138,15 @@ export const login = async (prevState, formData) => {
   const { email, password } = Object.fromEntries(formData);
 
   try {
-    await signIn("credentials", { email, password });
+    const res =  await signIn("credentials", { email, password });
+
+    if (res.error) {
+      return { error: res.error };
+    }
+
+    console.log(res)
+
+    return { success: true };
   } catch (err) {
     console.log(err);
 
