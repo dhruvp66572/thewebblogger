@@ -19,6 +19,7 @@
   
   .img{
     object-fit: cover;
+    cursor: pointer;
   }
   
   .date{

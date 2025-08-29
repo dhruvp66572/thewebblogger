@@ -7,8 +7,10 @@ export const authConfig = {
       // FOR MORE DETAIL ABOUT CALLBACK FUNCTIONS CHECK https://next-auth.js.org/configuration/callbacks
       async jwt({ token, user }) {
         if (user) {          
-          // console.log("In Auth.config User ",user);
+          // console.log("In Auth.config User ",user);      
           token.id = user.id;
+          token.email = user.email;
+          token.username = user.username;
           token.isAdmin = user.isAdmin;
         }
         // console.log("In Auth.config token",token);
@@ -16,8 +18,10 @@ export const authConfig = {
       },
       async session({ session, token }) {
         if (token) {
-          session.user.id = token.id;          
-          session.user.isAdmin = token.isAdmin;                  
+          session.user.username = token.username;
+          session.user.id = token.id;
+          session.user.isAdmin = token.isAdmin;
+          session.user.email = token.email;
         }
         // console.log("In Auth.config Session",session);
         return session;
@@ -25,7 +29,7 @@ export const authConfig = {
       authorized({ auth, request }) {
         const user = auth?.user;
         const isOnAdminPanel = request.nextUrl?.pathname.startsWith("/admin");
-        const isOnBlogPage = request.nextUrl?.pathname.startsWith("/blog");
+        //const isOnBlogPage = request.nextUrl?.pathname.startsWith("/blog");
         const isOnLoginPage = request.nextUrl?.pathname.startsWith("/login");
   
         // ONLY ADMIN CAN REACH THE ADMIN DASHBOARD
@@ -36,9 +40,9 @@ export const authConfig = {
   
         // ONLY AUTHENTICATED USERS CAN REACH THE BLOG PAGE
   
-        if (isOnBlogPage && !user) {
-          return false;
-        }
+        // if (isOnBlogPage && !user) {
+        //   return false;
+        // }
   
         // ONLY UNAUTHENTICATED USERS CAN REACH THE LOGIN PAGE
   

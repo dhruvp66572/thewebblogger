@@ -15,13 +15,13 @@ const AdminPosts = async () => {
             <Image
               src={post.img || "/noAvatar.png"}
               alt=""
-              width={50}
-              height={50}
+              width={100}
+              height={100}              
             />
             <span className={styles.postTitle}>{post.title}</span>
-          </div>
+          </div>        
           <form action={deletePost}>
-            <input type="hidden" name="id" value={post.id} />
+            <input type="hidden" name="id" value={post.id} />            
             <button className={styles.postButton}>Delete</button>
           </form>
         </div>

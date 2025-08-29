@@ -4,9 +4,21 @@ import { login } from "@/lib/action";
 import styles from "./loginForm.module.css";
 import Link from "next/link";
 import { useActionState } from "react";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 const LoginForm = () => {
-  const [state, formAction] = useActionState(login, undefined);
+  const navigate = useRouter();
+  const [state, formAction] = useActionState(login, undefined, {
+    onSuccess: () => {
+      toast.success("Login successful!");
+      navigate.push("/dashboard");
+    },
+    onError: (error) => {
+      console.error("Login error:", error);
+      toast.error("Login failed. Please check your credentials and try again.");
+    },
+  });
 
   return (
     <form className={styles.form} action={formAction}>

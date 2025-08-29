@@ -1,8 +1,10 @@
 import React from 'react'
 import Profile from '@/components/profile/Profile'
 import styles from './Profile.module.css'
+import { auth } from '@/lib/auth';
 
-const ProfilePage = () => {
+const ProfilePage = async () => {
+    const session = await auth();
   return (
     <div className={styles.profileContainer}>
       <div className={styles.profileHeader}>
@@ -11,7 +13,7 @@ const ProfilePage = () => {
       </div>
       
       <div className={styles.profileContent}>
-        <Profile />
+        <Profile session={session} />
       </div>
     </div>
   )

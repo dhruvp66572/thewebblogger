@@ -24,7 +24,7 @@ const login = async (credentials) => {
     if (!isPasswordCorrect) {
       // throw new Error("Invalid password!");
       return null;
-    };
+    }
 
     return user;
   } catch (err) {
@@ -50,7 +50,14 @@ export const {
       async authorize(credentials) {
         try {
           const user = await login(credentials);
-          return user;
+          if (!user) return null;
+
+          return {
+            id: user._id.toString(),
+            name: user.username,
+            email: user.email,
+            image: user.image || null,
+          };
         } catch (err) {
           return null;
         }
@@ -64,7 +71,7 @@ export const {
         connectToDb();
         try {
           const user = await User.findOne({ email: profile.email });
-          
+
           if (!user) {
             const newUser = new User({
               username: profile.login,

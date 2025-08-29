@@ -1,4 +1,3 @@
-
 import styles from "./home.module.css";
 import PostCard from "@/components/postCard/Postcard";
 import { getPosts } from "@/lib/data";

@@ -21,13 +21,14 @@ export const addPost = async (prevState, formData) => {
       desc,
       slug,
       userId,
-      img
+      img,
     });
 
     await newPost.save();
     console.log("Post saved to db");
     revalidatePath("/blog");
     revalidatePath("/admin");
+    return { success: true };
   } catch (err) {
     console.log(err);
     return { error: "Something went wrong!" };
@@ -44,6 +45,8 @@ export const deletePost = async (formData) => {
     console.log("deleted from db");
     revalidatePath("/blog");
     revalidatePath("/admin");
+
+    return { success: true };
   } catch (err) {
     console.log(err);
     return { error: "Something went wrong!" };
@@ -65,6 +68,25 @@ export const addUser = async (prevState, formData) => {
     await newUser.save();
     console.log("saved to db");
     revalidatePath("/admin");
+    return { success: true };
+  } catch (err) {
+    console.log(err);
+    return { error: "Something went wrong!" };
+  }
+};
+
+export const changeUserRole = async (formData) => {
+  const { id, role } = Object.fromEntries(formData);
+
+  try {
+    connectToDb();
+
+    await User.findByIdAndUpdate(id, {
+      isAdmin: role === "admin" ? true : false,
+    });
+    console.log("User role updated");
+    revalidatePath("/admin");
+    return { success: true };
   } catch (err) {
     console.log(err);
     return { error: "Something went wrong!" };
@@ -81,6 +103,7 @@ export const deleteUser = async (formData) => {
     await User.findByIdAndDelete(id);
     console.log("deleted from db");
     revalidatePath("/admin");
+    return { success: true };
   } catch (err) {
     console.log(err);
     return { error: "Something went wrong!" };
@@ -90,11 +113,13 @@ export const deleteUser = async (formData) => {
 export const handleGithubLogin = async () => {
   "use server";
   await signIn("github");
+  return { success: true };
 };
 
 export const handleLogout = async () => {
   "use server";
   await signOut();
+  return { success: true };
 };
 
 export const register = async (previousState, formData) => {
@@ -138,13 +163,17 @@ export const login = async (prevState, formData) => {
   const { email, password } = Object.fromEntries(formData);
 
   try {
-    const res =  await signIn("credentials", { email, password });
+    connectToDb();
+    const res = await signIn("credentials", {
+      email,
+      password
+    });
 
     if (res.error) {
       return { error: res.error };
     }
 
-    console.log(res)
+    console.log(res);
 
     return { success: true };
   } catch (err) {
