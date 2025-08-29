@@ -1,4 +1,3 @@
-
 import { getUsers } from "@/lib/data";
 import styles from "./adminUsers.module.css";
 import Image from "next/image";
@@ -29,10 +28,16 @@ const AdminUsers = async () => {
                 <select
                   name="role"
                   defaultValue={user.isAdmin ? "admin" : "user"}
+                  className={styles.changeuserSelect}
                 >
-                  <option value="user">User</option>
-                  <option value="admin">Admin</option>
+                  <option value="user" className={styles.changeuserOption}>
+                    User
+                  </option>
+                  <option value="admin" className={styles.changeuserOption}>
+                    Admin
+                  </option>
                 </select>
+
                 <button className={styles.userButton}>Change Role</button>
               </form>
             </div>

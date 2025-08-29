@@ -52,12 +52,7 @@ export const {
           const user = await login(credentials);
           if (!user) return null;
 
-          return {
-            id: user._id.toString(),
-            name: user.username,
-            email: user.email,
-            image: user.image || null,
-          };
+         return user;
         } catch (err) {
           return null;
         }

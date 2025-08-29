@@ -21,20 +21,22 @@
   cursor: pointer;
 }
 
-.changeuser{
+.changeuser {
   display: flex;
   align-items: center;
   gap: 10px;
-  select {
-    padding: 5px;
-    border: 1px solid var(--borderColor);
-    border-radius: 5px;
-    background-color: var(--backgroundColor);
-  }
-  option {
-    padding: 5px;
-    border-bottom: 1px solid var(--borderColor);
-    background-color: var(--backgroundColor);
-    color: var(--textColor);      
-  }
+}
+
+.changeuserSelect {
+  padding: 5px;
+  border: 1px solid var(--borderColor);
+  border-radius: 5px;
+  background-color: var(--backgroundColor);
+}
+
+.changeuserOption {
+  padding: 5px;
+  border-bottom: 1px solid var(--borderColor);
+  background-color: var(--backgroundColor);
+  color: var(--textColor);      
 }
